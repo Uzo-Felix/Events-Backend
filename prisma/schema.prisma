@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  email    String  @unique
+  password String?
+
+  prefix    String?
+  username  String?
+  avatar    String?
+  phone_no  String?
+  gender    String?
+  interests String[] @default([])
+  location  String?
+
+  auth_method       Auth
+  auth_id           String?
+  google_auth_token String?
+  x_auth_token      String?
+
+  email_verified             Boolean   @default(false)
+  email_verification_token   String?
+  email_verification_expires DateTime?
+
+  reset_password_token   String?
+  reset_password_expires DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt()
+
+  event      Event[]
+  user_event UserEvent[]
+
+  UserPreference UserPreference[]
+}
+
+// Define the Event model
+model Event {
+  id String @id @default(uuid())
+
+  name                     String
+  description              String
+  image                    String?
+  startTime                DateTime
+  endTime                  DateTime
+  startDate                DateTime
+  endDate                  DateTime
+  tags                     String[]
+  ticketPrice              Float
+  isPaidEvent              Boolean
+  eventType                String
+  location                 String?
+  eventLink                String?
+  registrationClosingDate  DateTime
+  numberOfAvailableTickets Int
+
+  organizerId String
+  organizer   User   @relation(fields: [organizerId], references: [id])
+
+  attendees UserEvent[]
+}
+
+// Many-to-many relationship between users and events for event registration
+model UserEvent {
+  id String @id @default(uuid())
+
+  userId  String
+  eventId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id])
+  Event Event @relation(fields: [eventId], references: [id])
+}
+
+model UserPreference {
+  id      String @id @default(uuid())
+  user_id String
+
+  event_update             Boolean?
+  Reminders                Boolean?
+  networking_opportunities Boolean?
+  email_notifications      Boolean?
+  push_notifications       Boolean?
+  allow_others_see_profile Boolean?
+  event_details            Boolean?
+  anyone_can_add_to_group  Boolean?
+
+  user User @relation(fields: [user_id], references: [id])
+}
+
+enum Auth {
+  basic
+  google
+  twitter
+}
