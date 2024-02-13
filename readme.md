@@ -1,12 +1,13 @@
 # EVENTS BACKEND
 
 ![Repo size](https://img.shields.io/github/repo-size/Uzo-Felix/Events-Backend)
-![Pep8 style](https://img.shields.io/badge/PEP8-style%20guide-purple?style=round-square)
+![Eslint Style](https://img.shields.io/badge/ESLINT-style%20guide-purple?style=round-square)
 ![Latest commit](https://img.shields.io/github/last-commit/Uzo-Felix/Events-Backend/main?style=round-square)
 
-This repo contains projects for learning backend development concepts.
+![Event App](./events.PNG) ![Event App](./events2.PNG)
+
 ## Overview
-event backend application is a comprehensive platform designed to manage various aspects of event organization, registration, and user engagement. Here's a breakdown of its key features and functionalities:
+Events backend application is a comprehensive platform designed to manage various aspects of event organization, registration, and user engagement. Here's a breakdown of its key features and functionalities:
 
 ## User Management
 - Users can register and authenticate using various methods such as email/password, Google authentication, or other social media platforms.
